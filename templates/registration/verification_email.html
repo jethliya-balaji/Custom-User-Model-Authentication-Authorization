@@ -1,0 +1,13 @@
+{% autoescape off %}
+
+Hi {{user.first_name}},
+
+We just need to verify your email address before you can access [site].
+
+Verify your email address by clicking: http://{{domain}}{% url 'verify_email' uidb64=uid token=token %}
+
+If you think it's not you, please ignore this email.
+
+Thanks!
+
+{% endautoescape %}

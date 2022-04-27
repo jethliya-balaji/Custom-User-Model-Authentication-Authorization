@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Sign Up{% endblock title %}
+{% block body %}
+<div class="container d-flex justify-content-center">
+    <div class="card" style="max-width: 800px; margin-top: 50px; margin-bottom: 50px;">
+        <article class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <a href="#" onclick="window.history.go(-1);"><i class="fas fa-arrow-circle-left fa-2x"></i> </a>
+                <h4 class="mx-3 flex-grow-1 align-self-bottem">Create accaunt</h4>
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row gx-3">
+                    <div class="mb-4 col-sm-6">
+                        <label class="form-label">First name</label>
+                        {{form.first_name | add_class:"form-control"}}
+                    </div>
+                    <div class="mb-4 col-sm-6">
+                        <label class="form-label">Last name</label>
+                        {{form.last_name | add_class:"form-control"}}
+                    </div>
+                </div>
+                <div class="row gx-3">
+                    <div class="mb-3 col-sm-6">
+                        <label class="form-label">Username</label>
+                        {{form.username | add_class:"form-control" | add_error_class:"is-invalid"}}
+                        {% for error in form.username.errors %}
+                            <small class="invalid-feedback">{{error}}</small>
+                        {% endfor %}
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label class="form-label">Phone</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><b>+91</b></span>
+                            {{form.phone_number | add_class:"form-control" | add_error_class:"is-invalid"}}
+                            {% for error in form.phone_number.errors %}
+                                <small class="invalid-feedback">{{error}}</small>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label class="form-label">Email</label>
+                        {{form.email | add_class:"form-control" | add_error_class:"is-invalid"}}
+                        <small class="form-text">We'll never share your email</small>
+                        {% for error in form.email.errors %}
+                            <small class="invalid-feedback">{{error}}</small>
+                        {% endfor %}
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label class="form-label">Address</label>
+                        {{form.address | add_class:"form-control" | attr:'placeholder:ex. Shop 3, Shiv Complex, Main Road, Warora, Maharashtra - 442907' }}
+                        <small class="form-text">Formate - Flat/Shop No, Shop/Building Name, Road/Street Name, City, State - Pincode</small>
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <label class="form-label">Create password</label>
+                        {{form.password1 | add_class:"form-control" | add_error_class:"is-invalid"}}
+                        {% for error in form.password1.errors %}
+                            <small class="invalid-feedback">{{error}}</small>
+                        {% endfor %}
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label class="form-label">Repeat password</label>
+                        {{form.password2 | add_class:"form-control" | add_error_class:"is-invalid"}}
+                        {% for error in form.password2.errors %}
+                            <small class="invalid-feedback">{{error}}</small>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 my-3">
+                        <label class="form-check me-auto">
+                            <input class="form-check-input" type="checkbox" onclick="terms_and_conditions_check(this)">
+                            <span class="form-check-label">I agree with Terms and Conditions</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-12">
+                        <button class="btn btn-primary w-100" type="submit" id="sign_up" disabled>Sign Up</button>
+                    </div>
+                </div>
+            </form>
+            <hr>
+            <p class="mb-0">Already have an account? <a href="{% url 'sign_in' %}">Sign in</a></p>
+        </article>
+    </div>
+</div>
+<script>
+    function terms_and_conditions_check(termsCheckBox){
+    //If the checkbox has been checked
+    if(termsCheckBox.checked){
+        //Set the disabled property to FALSE and enable the button.
+        document.getElementById("sign_up").disabled = false;
+    } else{
+        //Otherwise, disable the submit button.
+        document.getElementById("sign_up").disabled = true;
+    }
+}
+</script>
+{% endblock body %}
